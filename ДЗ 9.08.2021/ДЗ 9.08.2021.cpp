@@ -14,10 +14,11 @@ bool chekElement(int* array, size_t size, int value);
 void bubbleSort(int* array, size_t size);
 void selectionSort(int* array, size_t size);
 void insertionSort(int* array, size_t size);
-void vstavka(int* array, size_t size, size_t index, size_t value2);
+int* insert(int* arr, unsigned int n, int value, unsigned int index);
+int* pop_back(int* array, unsigned int& n);
 int main()
 {
-    const int size = 10;
+    unsigned int size = 10;
     int* array = new int[size] {};
     ZapArray(array, size);
     printArray(array, size);
@@ -61,9 +62,12 @@ int main()
     size_t index;
    std:: cout << "Enter index of insertion element: ";
     std::cin >> index;
-    vstavka(array, size, index, value2);
+    array=insert(array, size, index, value2);
     std::cout << "Your inserted array: " << std::endl;
     printArray(array, size + 1);
+
+    array = pop_back(array, size);
+    printArray(array, size);
     delete[] array;
     return 0;
 }
@@ -213,26 +217,20 @@ int sumArray(int* array, size_t size)
      }
  }
  //12
- void vstavka(int* array, const int size, size_t index, size_t value2)
+ int* insert(int* arr, unsigned int n, int value, unsigned int index)
  {
-     int* buffer = new int[size + 1]{};
-     for (size_t i = 0; i < index; i++)
-     {
-         buffer[i] = array[i];
-     }
-     for (size_t i = 0; i < index; i++)
-     {
-         buffer[i + 1] = array[i];
-     }
-     delete[] buffer;
-
-     /*for (size_t i = size; i >= index; i--)
-     {
-         array[i] = array[i - 1];
-         array[index] = value2;
-     }*/
+     int* buffer = new int[n + 1]{};
+     for (int i = 0; i < index; i++)
+         buffer[i] = arr[i];
+     for (int i = index; i < n; i++)
+         buffer[i + 1] = arr[i];
+     delete[] arr;
+     arr = buffer;
+     arr[index] = value;
+     n++;
+     return arr;
  }
- int* pop_back(int array[], unsigned int& n)
+ int* pop_back(int* array, unsigned int& n)
  {
      int* buffer = new int[n--]{};
      for (size_t i = 0; i < n; i++)
